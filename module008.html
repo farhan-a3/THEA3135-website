@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Module 008 - Data Walkthrough & Critique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">
+    <h1>Aurora Stage Project Hub</h1>
+    <p class="tagline">Module 008 - Data Walkthrough and Critique</p>
+  </div>
+
+  <button class="nav-toggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <nav class="top-nav">
+    <a href="index.html">← Back to main hub</a>
+  </nav>
+</header>
+
+<main>
+  <section class="section">
+    <h2>Module 008 Assignment: Data Walkthrough and Critique</h2>
+
+    <!-- 1. Platform + URL -->
+    <article class="card">
+      <h3>1. Platform and Sign-up URL</h3>
+      <p><strong>Platform chosen:</strong> Facebook sign-up page</p>
+      <p>
+        <strong>Sign-up URL:</strong>
+        <a href="https://www.facebook.com/reg" target="_blank" rel="noopener">
+          https://www.facebook.com/reg
+        </a>
+      </p>
+    </article>
+
+    <!-- 2. Screenshot -->
+    <article class="card">
+      <h3>2. Screenshot of Sign-up Form</h3>
+      <figure>
+        <img src="files/facebook-signup.png" alt="Screenshot of Facebook sign-up form" />
+      </figure>
+    </article>
+
+    <!-- 3. Description -->
+    <article class="card">
+      <h3>3. Description of the System</h3>
+      <p>
+        Facebook is a social media platform where users can create profiles, connect with friends,
+        share posts, and follow other pages. To participate, users are asked to make an account
+        through a single registration form that collects basic personal and login information.
+        This sign-up form helps Facebook identify users, secure their accounts, and connect
+        them to the social network. It also links the new account to various features such
+        as the news feed, friend suggestions, and targeted content.
+      </p>
+    </article>
+
+    <!-- 4. Data collected -->
+    <article class="card">
+      <h3>4. Data Collected</h3>
+
+      <h4>Visible form fields</h4>
+      <ul>
+        <li>First name</li>
+        <li>Last name</li>
+        <li>Mobile number or email address</li>
+        <li>New password</li>
+        <li>Date of birth</li>
+        <li>Gender</li>
+      </ul>
+
+      <h4>Likely inferred/background data during sign-up</h4>
+      <ul>
+        <li>IP address and approximate location</li>
+        <li>Device type (phone, tablet, desktop)</li>
+        <li>Operating system and browser type</li>
+        <li>Time and date of registration</li>
+        <li>Referral source (like link from an app, search engine, or ad)</li>
+      </ul>
+
+      <h4>Behavioural data likely tracked after sign-up</h4>
+      <ul>
+        <li>Profiles and pages you view, like, or follow</li>
+        <li>Posts you react to, comment on, or share</li>
+        <li>Friends added and groups joined</li>
+        <li>Time spent in the feed and which types of content you pause on</li>
+        <li>Devices and locations used to log in</li>
+        <li>Interactions with ads (views, clicks, etc)</li>
+      </ul>
+    </article>
+
+    <!-- 5. Database sketch -->
+    <article class="card">
+      <h3>5. Relational Database Sketch (Conceptual)</h3>
+
+      <h4>Primary table: <code>users</code></h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Key / role</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>user_id</code></td>
+            <td>PRIMARY KEY</td>
+            <td>Unique ID for each user account.</td>
+          </tr>
+          <tr>
+            <td><code>first_name</code></td>
+            <td>Attribute</td>
+            <td>First name entered on the sign-up form.</td>
+          </tr>
+          <tr>
+            <td><code>last_name</code></td>
+            <td>Attribute</td>
+            <td>Last name entered on the sign-up form.</td>
+          </tr>
+          <tr>
+            <td><code>email_or_phone</code></td>
+            <td>Attribute (unique)</td>
+            <td>Email address or mobile number used for login and contact.</td>
+          </tr>
+          <tr>
+            <td><code>hashed_password</code></td>
+            <td>Security</td>
+            <td>Encrypted version of the user’s password.</td>
+          </tr>
+          <tr>
+            <td><code>date_of_birth</code></td>
+            <td>Attribute</td>
+            <td>Date of birth used for age checks and personalization.</td>
+          </tr>
+          <tr>
+            <td><code>gender</code></td>
+            <td>Attribute</td>
+            <td>Gender field chosen during sign-up.</td>
+          </tr>
+          <tr>
+            <td><code>created_at</code></td>
+            <td>Metadata</td>
+            <td>Date and time the account was created.</td>
+          </tr>
+          <tr>
+            <td><code>country</code></td>
+            <td>Attribute (inferred)</td>
+            <td>Country / region, often inferred from IP or user settings.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Related table: <code>posts</code></h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Key / role</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>post_id</code></td>
+            <td>PRIMARY KEY</td>
+            <td>Unique ID for each post created on the platform.</td>
+          </tr>
+          <tr>
+            <td><code>user_id</code></td>
+            <td>FOREIGN KEY</td>
+            <td>Links each post back to the account in <code>users.user_id</code>.</td>
+          </tr>
+          <tr>
+            <td><code>content_text</code></td>
+            <td>Attribute</td>
+            <td>Text content written by the user.</td>
+          </tr>
+          <tr>
+            <td><code>media_url</code></td>
+            <td>Attribute</td>
+            <td>Link to any attached image, video, or other media.</td>
+          </tr>
+          <tr>
+            <td><code>created_at</code></td>
+            <td>Metadata</td>
+            <td>Date and time the post was created.</td>
+          </tr>
+          <tr>
+            <td><code>visibility</code></td>
+            <td>Attribute</td>
+            <td>Audience setting (for example: public, friends, custom).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="small-note">
+        The <code>users</code> table stores each Facebook account, and the
+        <code>posts</code> table stores content created by those accounts.
+        The two tables are connected by <code>user_id</code>, which lets the system
+        link each post to the correct user, build profile timelines, and generate
+        the news feed from related posts.
+      </p>
+    </article>
+
+
+    <!-- 6. Ethical analysis -->
+    <article class="card">
+      <h3>6. Ethical Analysis</h3>
+      <p>
+        One ethical concern is privacy and surveillance, since Facebook combines registration
+        data with detailed behavioural tracking (friends, posts, reactions, and ad clicks) to
+        build deep profiles of users&apos; social lives and interests. Another concern is data
+        minimization and long-term retention: Facebook can store years of personal content,
+        messages, and metadata that go far beyond what is needed to maintain a basic account.
+        If this information were mishandled or breached, it could expose sensitive details
+        about relationships, locations, and beliefs. There is also a risk of opaque
+        personalization and influence, where the news feed and ads are shaped by algorithms
+        using this data in ways users cannot easily see or control.
+      </p>
+    </article>
+
+    <!-- 7. Recommendations -->
+    <article class="card">
+      <h3>7. Recommendations</h3>
+      <ul>
+        <li>
+          Make it clearer during sign-up which fields are strictly required and why, and
+          provide a minimal sign-up option that only uses essential data.
+        </li>
+        <li>
+          Offer a simple privacy dashboard that highlights key categories of stored data
+          (friends, posts, ad interests, location history) and lets users delete or limit
+          what is kept.
+        </li>
+        <li>
+          Explain in plain language how news feed ranking and ad targeting use user data,
+          and allow users to easily reduce tracking or opt out of certain types of
+          behavioural profiling.
+        </li>
+      </ul>
+    </article>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Aurora Stage Project Hub · Beta version</p>
+  <p class="small-note">Module 008 · Data Walkthrough and Critique (Facebook)</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
