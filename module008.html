@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Module 008 - Data Walkthrough & Critique</title>
+  <title>Module 008 · Data Walkthrough & Critique</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -10,7 +10,7 @@
 <header class="site-header">
   <div class="brand">
     <h1>Aurora Stage Project Hub</h1>
-    <p class="tagline">Module 008 - Data Walkthrough and Critique</p>
+    <p class="tagline">Module 008 · Data Walkthrough and Critique</p>
   </div>
 
   <button class="nav-toggle" aria-label="Toggle navigation">
@@ -102,54 +102,44 @@
         <thead>
           <tr>
             <th>Field</th>
-            <th>Key / role</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>user_id</code></td>
-            <td>PRIMARY KEY</td>
-            <td>Unique ID for each user account.</td>
+            <td>Primary key: unique ID for each user account.</td>
           </tr>
           <tr>
             <td><code>first_name</code></td>
-            <td>Attribute</td>
             <td>First name entered on the sign-up form.</td>
           </tr>
           <tr>
             <td><code>last_name</code></td>
-            <td>Attribute</td>
             <td>Last name entered on the sign-up form.</td>
           </tr>
           <tr>
             <td><code>email_or_phone</code></td>
-            <td>Attribute (unique)</td>
-            <td>Email address or mobile number used for login and contact.</td>
+            <td>Unique email address or mobile number used for login and contact.</td>
           </tr>
           <tr>
             <td><code>hashed_password</code></td>
-            <td>Security</td>
-            <td>Encrypted version of the user’s password.</td>
+            <td>Encrypted version of the user’s password for security.</td>
           </tr>
           <tr>
             <td><code>date_of_birth</code></td>
-            <td>Attribute</td>
             <td>Date of birth used for age checks and personalization.</td>
           </tr>
           <tr>
             <td><code>gender</code></td>
-            <td>Attribute</td>
             <td>Gender field chosen during sign-up.</td>
           </tr>
           <tr>
             <td><code>created_at</code></td>
-            <td>Metadata</td>
             <td>Date and time the account was created.</td>
           </tr>
           <tr>
             <td><code>country</code></td>
-            <td>Attribute (inferred)</td>
             <td>Country / region, often inferred from IP or user settings.</td>
           </tr>
         </tbody>
@@ -160,39 +150,32 @@
         <thead>
           <tr>
             <th>Field</th>
-            <th>Key / role</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>post_id</code></td>
-            <td>PRIMARY KEY</td>
-            <td>Unique ID for each post created on the platform.</td>
+            <td>Primary key: unique ID for each post created on the platform.</td>
           </tr>
           <tr>
             <td><code>user_id</code></td>
-            <td>FOREIGN KEY</td>
-            <td>Links each post back to the account in <code>users.user_id</code>.</td>
+            <td>Foreign key that links each post back to the account in <code>users.user_id</code>.</td>
           </tr>
           <tr>
             <td><code>content_text</code></td>
-            <td>Attribute</td>
             <td>Text content written by the user.</td>
           </tr>
           <tr>
             <td><code>media_url</code></td>
-            <td>Attribute</td>
             <td>Link to any attached image, video, or other media.</td>
           </tr>
           <tr>
             <td><code>created_at</code></td>
-            <td>Metadata</td>
             <td>Date and time the post was created.</td>
           </tr>
           <tr>
             <td><code>visibility</code></td>
-            <td>Attribute</td>
             <td>Audience setting (for example: public, friends, custom).</td>
           </tr>
         </tbody>
@@ -200,27 +183,26 @@
 
       <p class="small-note">
         The <code>users</code> table stores each Facebook account, and the
-        <code>posts</code> table stores content created by those accounts.
-        The two tables are connected by <code>user_id</code>, which lets the system
-        link each post to the correct user, build profile timelines, and generate
-        the news feed from related posts.
+        <code>posts</code> table stores posts created by those users.
+        The two tables are connected by <code>user_id</code> which lets the system
+        link each post to the correct user, helping to build profile timelines
+        and generate the news feed from related posts.
       </p>
     </article>
-
 
     <!-- 6. Ethical analysis -->
     <article class="card">
       <h3>6. Ethical Analysis</h3>
       <p>
         One ethical concern is privacy and surveillance, since Facebook combines registration
-        data with detailed behavioural tracking (friends, posts, reactions, and ad clicks) to
-        build deep profiles of users&apos; social lives and interests. Another concern is data
-        minimization and long-term retention: Facebook can store years of personal content,
-        messages, and metadata that go far beyond what is needed to maintain a basic account.
-        If this information were mishandled or breached, it could expose sensitive details
-        about relationships, locations, and beliefs. There is also a risk of opaque
-        personalization and influence, where the news feed and ads are shaped by algorithms
-        using this data in ways users cannot easily see or control.
+        data with detailed behavioural tracking (friends, posts, reactions, ad clicks, etc) to
+        build detailed profiles of users' social lives and interests. Another concern is data
+        minimization and long-term retention, Facebook can store years of personal content,
+        messages, and metadata that go beyond what is needed to maintain a basic account.
+        If this information is mishandled or breached, it could expose sensitive details
+        about relationships, locations, and more. There's also a risk that Facebook quietly 
+        decides what we see, because the news feed and ads are driven by algorithms that 
+        use our data in ways most people don't really understand or control.
       </p>
     </article>
 
@@ -229,18 +211,17 @@
       <h3>7. Recommendations</h3>
       <ul>
         <li>
-          Make it clearer during sign-up which fields are strictly required and why, and
-          provide a minimal sign-up option that only uses essential data.
+          During sign-up, clearly show which fields are truly required, explain why they 
+          are needed, and give a simple "basic account" option that only asks for the essentials.
         </li>
         <li>
-          Offer a simple privacy dashboard that highlights key categories of stored data
-          (friends, posts, ad interests, location history) and lets users delete or limit
-          what is kept.
+          Add an easy-to-use privacy page where people can see what kinds of data are stored 
+          (like friends, posts, ad interests, or location history) and quickly delete or limit 
+          that information.
         </li>
         <li>
-          Explain in plain language how news feed ranking and ad targeting use user data,
-          and allow users to easily reduce tracking or opt out of certain types of
-          behavioural profiling.
+          Use plain, everyday language to explain how the news feed and ads use a person's data, 
+          and include simple controls to cut down tracking or turn off certain kinds of profiling.
         </li>
       </ul>
     </article>
@@ -250,7 +231,7 @@
 
 <footer class="site-footer">
   <p>Aurora Stage Project Hub · Beta version</p>
-  <p class="small-note">Module 008 · Data Walkthrough and Critique (Facebook)</p>
+  <p class="small-note">Module 008 · Data Walkthrough and Critique</p>
 </footer>
 
 <script src="script.js"></script>
