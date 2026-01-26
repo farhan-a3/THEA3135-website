@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Database Project · Query Proof</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <h1>Aurora Stage Project Hub</h1>
+    <p class="tagline">Technology in Arts Management · Database Project</p>
+  </div>
+
+  <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+  <nav class="top-nav">
+    <a href="index.html">← Back to main hub</a>
+  </nav>
+</header>
+
+<main>
+  <section class="section">
+    <h2>Database Project Submission</h2>
+
+    <article class="card">
+      <h3>Assigned Question</h3>
+      <p><strong>Question:</strong> How much money is being spent on tickets to “Dirty Story”?</p>
+      <p><strong>Final Answer:</strong> <strong>$80.00</strong></p>
+    </article>
+
+    <article class="card">
+      <h3>Working Files</h3>
+      <ul>
+        <li><a href="files/Database%20Project.odb" download>Download LibreOffice Base database (.odb)</a></li>
+        <li><a href="files/MT%20Data%20Set%20-%20CUSTOMERS.csv" download>Download CUSTOMERS.csv</a></li>
+        <li><a href="files/MT%20Data%20Set%20-%20ORDERS.csv" download>Download ORDERS.csv</a></li>
+        <li><a href="files/MT%20Data%20Set%20-%20SHOWS.csv" download>Download SHOWS.csv</a></li>
+      </ul>
+      <p class="small-note">
+        These files are included so the results can be reviewed and reproduced.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Step-by-step Proof (Process Description)</h3>
+
+      <h4>1) Receive and review the dataset</h4>
+      <ul>
+        <li>Download the provided zip folder that contains three CSV files: Customers, Orders, and Shows.</li>
+        <li>Confirm the context: this is a small box office style dataset where customers place orders for tickets to shows.</li>
+        <li>Open each CSV to understand what each file represents:</li>
+        <ul>
+          <li><strong>CUSTOMERS</strong> contains customer details and a unique customer identifier.</li>
+          <li><strong>SHOWS</strong> contains show details and a unique show identifier.</li>
+          <li><strong>ORDERS</strong> connects customers to shows and includes ticket quantity and price.</li>
+        </ul>
+      </ul>
+
+      <h4>2) Create a new LibreOffice Base database</h4>
+      <ul>
+        <li>Open LibreOffice Base.</li>
+        <li>Create a new database using the default wizard settings.</li>
+        <li>Save the database file as <strong>Database Project.odb</strong>.</li>
+      </ul>
+
+      <h4>3) Import the CSV files as tables</h4>
+      <ul>
+        <li>For each CSV file, import it into Base as a table (Tables section).</li>
+        <li>Name the tables clearly as <strong>Customers</strong>, <strong>Orders</strong>, and <strong>Shows</strong>.</li>
+        <li>(Optional but helpful) In the Orders CSV, sort by UID ascending before importing so the data is easier to review.</li>
+      </ul>
+
+      <h4>4) Check fields, data types, and primary keys</h4>
+      <ul>
+        <li>Rename ID fields so they are clear and consistent:</li>
+        <ul>
+          <li><strong>Customers</strong>: rename ID → <strong>CUSTOMER ID</strong></li>
+          <li><strong>Orders</strong>: rename PEOPLE ID → <strong>CUSTOMER ID</strong>, rename ID → <strong>ORDER ID</strong></li>
+          <li><strong>Shows</strong>: rename ID → <strong>SHOW ID</strong></li>
+        </ul>
+        <li>Verify the primary keys (unique identifiers):</li>
+        <ul>
+          <li>Customers: <strong>CUSTOMER ID</strong> is the primary key.</li>
+          <li>Shows: <strong>SHOW ID</strong> is the primary key.</li>
+          <li>Orders: <strong>ORDER ID</strong> is the primary key.</li>
+        </ul>
+        <li>Update column types as needed so relationships work properly (especially in Orders):</li>
+        <ul>
+          <li>In <strong>Orders</strong>, set <strong>CUSTOMER ID</strong> and <strong>SHOW ID</strong> to a numeric type like <strong>BIGINT</strong> (matching the referenced keys).</li>
+        </ul>
+      </ul>
+
+      <h4>5) Create relationships between tables</h4>
+      <ul>
+        <li>Go to <strong>Tools → Relationships</strong>.</li>
+        <li>Add the three tables: Customers, Orders, Shows.</li>
+        <li>Create the relationships by connecting matching ID fields:</li>
+        <ul>
+          <li>Connect <strong>Customers.CUSTOMER ID</strong> → <strong>Orders.CUSTOMER ID</strong></li>
+          <li>Connect <strong>Shows.SHOW ID</strong> → <strong>Orders.SHOW ID</strong></li>
+        </ul>
+        <li>Why this makes sense: Orders acts like a transaction table that links “who bought” (customer) to “what they bought” (show), including quantity and price.</li>
+      </ul>
+
+      <h4>6) Build the query in Design View (to answer the assigned question)</h4>
+      <ul>
+        <li>Go to <strong>Queries → Create Query in Design View</strong>.</li>
+        <li>Add the tables <strong>Shows</strong>, <strong>Orders</strong>, and (optional) <strong>Customers</strong>. The joins should appear automatically because relationships were set.</li>
+        <li>Add these fields to the query grid:</li>
+        <ul>
+          <li><strong>Shows.Title</strong> (so we can filter to Dirty Story)</li>
+          <li>A calculated field for total per order line: in a blank column Field row, type:
+            <br><code>"QTY" * "PRICE"</code>
+            <br>and set the Alias row to: <code>TotalSpent</code>
+          </li>
+        </ul>
+        <li>Under <strong>Shows.Title</strong>, set the <strong>Criteria</strong> to:
+          <br><code>'Dirty Story'</code>
+        </li>
+        <li>Turn it into a SUM query:
+          <ul>
+            <li>Click the <strong>Σ (Sum)</strong> button in the query design toolbar.</li>
+            <li>In the <strong>Function</strong> row:
+              <ul>
+                <li>Set <strong>Title</strong> to <strong>Group</strong></li>
+                <li>Set <strong>TotalSpent</strong> (the <code>"QTY" * "PRICE"</code> column) to <strong>Sum</strong></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Run the query. The result shows one row for Dirty Story with <strong>TotalSpent = 80</strong>, meaning <strong>$80.00</strong> was spent on tickets to Dirty Story.</li>
+        <li>Save the query (example name): <strong>Dirty Story Total Spent</strong>.</li>
+      </ul>
+
+      <h4>7) SQL used (auto-generated by Base)</h4>
+      <pre><code>SELECT "Shows"."Title",
+       SUM( "QTY" * "PRICE" ) AS "TotalSpent"
+FROM "Orders", "Customers", "Shows"
+WHERE "Orders"."CUSTOMER ID" = "Customers"."CUSTOMER ID"
+  AND "Orders"."SHOW ID" = "Shows"."SHOW ID"
+GROUP BY "Shows"."Title"
+HAVING ( ( "Shows"."Title" = 'Dirty Story' ) )</code></pre>
+
+      <p class="small-note">
+        This query filters the show title to “Dirty Story” and sums (QTY × PRICE) across matching orders, producing the final total.
+      </p>
+    </article>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Aurora Stage Project Hub · Beta version</p>
+  <p class="small-note">Database Project · Query + Proof</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
