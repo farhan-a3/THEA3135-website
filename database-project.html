@@ -32,6 +32,20 @@
     </article>
 
     <article class="card">
+      <h3>Query Result Screenshot</h3>
+      <figure>
+        <img
+          src="files/dirty-story-query-result.png"
+          alt="LibreOffice Base query result showing Dirty Story total spent equals 80"
+          style="max-width: 100%; height: auto; border-radius: 10px; border: 1px solid #ddd;"
+        />
+        <figcaption class="small-note">
+          Final query result showing TotalSpent = 80 for “Dirty Story”.
+        </figcaption>
+      </figure>
+    </article>
+
+    <article class="card">
       <h3>Working Files</h3>
       <ul>
         <li><a href="files/Database%20Project.odb" download>Download LibreOffice Base database (.odb)</a></li>
@@ -50,13 +64,14 @@
       <h4>1) Receive and review the dataset</h4>
       <ul>
         <li>Download the provided zip folder that contains three CSV files: Customers, Orders, and Shows.</li>
-        <li>Confirm the context: this is a small box office style dataset where customers place orders for tickets to shows.</li>
-        <li>Open each CSV to understand what each file represents:</li>
+        <li>This is a small box office style dataset where customers place orders for tickets to shows.</li>
+        <li>Open each CSV to understand what each file represents:
         <ul>
-          <li><strong>CUSTOMERS</strong> contains customer details and a unique customer identifier.</li>
-          <li><strong>SHOWS</strong> contains show details and a unique show identifier.</li>
-          <li><strong>ORDERS</strong> connects customers to shows and includes ticket quantity and price.</li>
+            <li><strong>CUSTOMERS</strong> contains customer details and a unique customer identifier.</li>
+            <li><strong>SHOWS</strong> contains show details and a unique show identifier.</li>
+            <li><strong>ORDERS</strong> connects customers to shows and includes ticket quantity and price.</li>
         </ul>
+        </li>
       </ul>
 
       <h4>2) Create a new LibreOffice Base database</h4>
@@ -75,78 +90,73 @@
 
       <h4>4) Check fields, data types, and primary keys</h4>
       <ul>
-        <li>Rename ID fields so they are clear and consistent:</li>
-        <ul>
-          <li><strong>Customers</strong>: rename ID → <strong>CUSTOMER ID</strong></li>
-          <li><strong>Orders</strong>: rename PEOPLE ID → <strong>CUSTOMER ID</strong>, rename ID → <strong>ORDER ID</strong></li>
-          <li><strong>Shows</strong>: rename ID → <strong>SHOW ID</strong></li>
-        </ul>
-        <li>Verify the primary keys (unique identifiers):</li>
-        <ul>
-          <li>Customers: <strong>CUSTOMER ID</strong> is the primary key.</li>
-          <li>Shows: <strong>SHOW ID</strong> is the primary key.</li>
-          <li>Orders: <strong>ORDER ID</strong> is the primary key.</li>
-        </ul>
-        <li>Update column types as needed so relationships work properly (especially in Orders):</li>
-        <ul>
-          <li>In <strong>Orders</strong>, set <strong>CUSTOMER ID</strong> and <strong>SHOW ID</strong> to a numeric type like <strong>BIGINT</strong> (matching the referenced keys).</li>
-        </ul>
+        <li>Rename ID fields so they are clear and consistent:
+          <ul>
+            <li><strong>Customers</strong>: rename ID → <strong>CUSTOMER ID</strong></li>
+            <li><strong>Orders</strong>: rename PEOPLE ID → <strong>CUSTOMER ID</strong>, rename ID → <strong>ORDER ID</strong></li>
+            <li><strong>Shows</strong>: rename ID → <strong>SHOW ID</strong></li>
+          </ul>
+        </li>
+        <li>Verify the primary keys (unique identifiers):
+          <ul>
+            <li>Customers: <strong>CUSTOMER ID</strong> is the primary key.</li>
+            <li>Shows: <strong>SHOW ID</strong> is the primary key.</li>
+            <li>Orders: <strong>ORDER ID</strong> is the primary key.</li>
+          </ul>
+        </li>
+        <li>Update column types as needed so relationships work properly:
+          <ul>
+            <li>In <strong>Orders</strong>, set <strong>CUSTOMER ID</strong> and <strong>SHOW ID</strong> to type <strong>BIGINT</strong> (matching the referenced keys).</li>
+          </ul>
+        </li>
       </ul>
 
       <h4>5) Create relationships between tables</h4>
       <ul>
         <li>Go to <strong>Tools → Relationships</strong>.</li>
         <li>Add the three tables: Customers, Orders, Shows.</li>
-        <li>Create the relationships by connecting matching ID fields:</li>
-        <ul>
-          <li>Connect <strong>Customers.CUSTOMER ID</strong> → <strong>Orders.CUSTOMER ID</strong></li>
-          <li>Connect <strong>Shows.SHOW ID</strong> → <strong>Orders.SHOW ID</strong></li>
-        </ul>
+        <li>Create the relationships by connecting matching ID fields:
+          <ul>
+            <li>Connect <strong>Customers.CUSTOMER ID</strong> → <strong>Orders.CUSTOMER ID</strong></li>
+            <li>Connect <strong>Shows.SHOW ID</strong> → <strong>Orders.SHOW ID</strong></li>
+          </ul>
+        </li>
         <li>Why this makes sense: Orders acts like a transaction table that links “who bought” (customer) to “what they bought” (show), including quantity and price.</li>
       </ul>
 
       <h4>6) Build the query in Design View (to answer the assigned question)</h4>
       <ul>
         <li>Go to <strong>Queries → Create Query in Design View</strong>.</li>
-        <li>Add the tables <strong>Shows</strong>, <strong>Orders</strong>, and (optional) <strong>Customers</strong>. The joins should appear automatically because relationships were set.</li>
-        <li>Add these fields to the query grid:</li>
-        <ul>
-          <li><strong>Shows.Title</strong> (so we can filter to Dirty Story)</li>
-          <li>A calculated field for total per order line: in a blank column Field row, type:
-            <br><code>"QTY" * "PRICE"</code>
-            <br>and set the Alias row to: <code>TotalSpent</code>
-          </li>
-        </ul>
-        <li>Under <strong>Shows.Title</strong>, set the <strong>Criteria</strong> to:
-          <br><code>'Dirty Story'</code>
-        </li>
-        <li>Turn it into a SUM query:
+        <li>Add the tables <strong>Shows</strong>, <strong>Orders</strong>, and <strong>Customers</strong>. The joins should appear automatically because relationships were set.</li>
+        <li>Add these fields to the query grid:
           <ul>
-            <li>Click the <strong>Σ (Sum)</strong> button in the query design toolbar.</li>
-            <li>In the <strong>Function</strong> row:
-              <ul>
-                <li>Set <strong>Title</strong> to <strong>Group</strong></li>
-                <li>Set <strong>TotalSpent</strong> (the <code>"QTY" * "PRICE"</code> column) to <strong>Sum</strong></li>
-              </ul>
+            <li><strong>Shows.Title</strong> (so we can filter to Dirty Story)</li>
+            <li>A calculated field for total per order line: in a blank column Field row, type:
+              <br><code>"QTY" * "PRICE"</code>
+              <br>and set the Alias row to: <code>TotalSpent</code>
             </li>
           </ul>
         </li>
+        <li>Under <strong>Shows.Title</strong>, set the <strong>Criteria</strong> to:
+          <br><code>'Dirty Story'</code>
+        </li>
+        <li>To turn it into a SUM query, in the <strong>Function</strong> row:
+          <ul>
+            <li>Set <strong>Title</strong> to <strong>Group</strong></li>
+            <li>Set <strong>TotalSpent</strong> (the <code>"QTY" * "PRICE"</code> column) to <strong>Sum</strong></li>
+          </ul>
+        </li>
         <li>Run the query. The result shows one row for Dirty Story with <strong>TotalSpent = 80</strong>, meaning <strong>$80.00</strong> was spent on tickets to Dirty Story.</li>
-        <li>Save the query (example name): <strong>Dirty Story Total Spent</strong>.</li>
+        <li>Save the query as <strong>Q_TotalSpent_DirtyStory</strong>.</li>
       </ul>
 
       <h4>7) SQL used (auto-generated by Base)</h4>
-      <pre><code>SELECT "Shows"."Title",
-       SUM( "QTY" * "PRICE" ) AS "TotalSpent"
+      <pre><code>SELECT "Shows"."Title", SUM( "QTY" * "PRICE" ) AS "TotalSpent"
 FROM "Orders", "Customers", "Shows"
 WHERE "Orders"."CUSTOMER ID" = "Customers"."CUSTOMER ID"
   AND "Orders"."SHOW ID" = "Shows"."SHOW ID"
 GROUP BY "Shows"."Title"
 HAVING ( ( "Shows"."Title" = 'Dirty Story' ) )</code></pre>
-
-      <p class="small-note">
-        This query filters the show title to “Dirty Story” and sums (QTY × PRICE) across matching orders, producing the final total.
-      </p>
     </article>
 
   </section>
