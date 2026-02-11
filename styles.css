@@ -358,6 +358,18 @@ body {
   font-weight: 600;
 }
 
+/* Responsive images (keeps them inside cards/containers) */
+.responsive-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optional: ensures captions don’t look weird */
+.figure {
+  margin: 0;
+}
+
 /* RESPONSIVE NAV & LAYOUT */
 
 @media (max-width: 880px) {
