@@ -136,6 +136,27 @@ body {
   margin-top: 0;
 }
 
+.course-work-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.coursework-links li {
+  margin-bottom: 0.7rem;
+}
+
+.coursework-links a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.coursework-links a:hover {
+  text-decoration: underline;
+}
+
 .two-column {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
@@ -394,7 +415,8 @@ body {
   }
 
   .calendar-layout,
-  .two-column {
+  .two-column,
+  .course-work-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
